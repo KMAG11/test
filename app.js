@@ -4,7 +4,8 @@ document.getElementById("fetch-news").addEventListener("click", async () => {
     const category = document.getElementById("category").value;
     try {
         const news = await fetchNews(category);
-        if (news && news.length > 0) {
+        console.log("Fetched News:", news); // Log the fetched news
+        if (news && Array.isArray(news) && news.length > 0) {
             displayNews(news);
         } else {
             alert("No news found for this category.");
@@ -22,8 +23,9 @@ const fetchNews = async (category) => {
             `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`
         );
         const data = await response.json();
+        console.log("API Response:", data); // Log the API response
         
-        if (data.status === "ok") {
+        if (data.status === "ok" && Array.isArray(data.articles)) {
             return data.articles;
         } else {
             throw new Error(data.message || "Failed to fetch news.");
