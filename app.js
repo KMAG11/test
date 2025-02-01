@@ -22,13 +22,20 @@ const fetchNews = async (category) => {
         const response = await fetch(
             `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=${apiKey}`
         );
+
+        // Check if the response was successful (status 200)
+        if (!response.ok) {
+            throw new Error(`Error fetching data: ${response.status}`);
+        }
+
         const data = await response.json();
         console.log("API Response:", data); // Log the API response
         
-        if (data.status === "ok" && Array.isArray(data.articles)) {
+        // Ensure the response contains articles
+        if (data && data.status === "ok" && Array.isArray(data.articles)) {
             return data.articles;
         } else {
-            throw new Error(data.message || "Failed to fetch news.");
+            throw new Error("No articles found in the response.");
         }
     } catch (error) {
         console.error("Error in fetchNews:", error);
