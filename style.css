@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+select, button {
+    padding: 10px;
+    margin: 10px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.news-item {
+    background-color: white;
+    padding: 15px;
+    margin: 10px;
+    width: 300px;
+    text-align: left;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-item img {
+    width: 100%;
+    border-radius: 5px;
+}
