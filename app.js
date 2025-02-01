@@ -3,14 +3,14 @@ const apiKey = "3c06c79b78d44bd591e6c40e5aae74df"; // Replace with your NewsAPI 
 document.getElementById("fetch-news").addEventListener("click", async () => {
     const category = document.getElementById("category").value;
     try {
-        let news = await fetchNews(category);
-        
-        // Redefine news if it's undefined or null
-        if (!news || news === undefined || news === null) {
-            news = []; // Default to an empty array
-        }
-        
+        // Explicitly set news to an empty array initially to avoid undefined errors
+        let news = [];
+
+        // Fetch news articles for the given category
+        news = await fetchNews(category);
         console.log("Fetched News:", news); // Log the fetched news
+
+        // Ensure news is a valid array before calling displayNews
         if (Array.isArray(news) && news.length > 0) {
             displayNews(news);
         } else {
@@ -36,8 +36,8 @@ const fetchNews = async (category) => {
 
         const data = await response.json();
         console.log("API Response:", data); // Log the API response
-        
-        // Ensure the response contains articles
+
+        // Ensure the response contains articles and return them
         if (data && data.status === "ok" && Array.isArray(data.articles)) {
             return data.articles;
         } else {
@@ -51,6 +51,12 @@ const fetchNews = async (category) => {
 
 // Display news on the page
 const displayNews = (news) => {
+    // Ensure news is an array before trying to display it
+    if (!Array.isArray(news) || news.length === 0) {
+        console.error("Invalid or empty news array:", news);
+        return; // Exit early if the news array is invalid
+    }
+
     const newsContainer = document.getElementById("news-container");
     newsContainer.innerHTML = ""; // Clear previous results
 
