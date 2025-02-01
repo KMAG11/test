@@ -3,9 +3,15 @@ const apiKey = "3c06c79b78d44bd591e6c40e5aae74df"; // Replace with your NewsAPI 
 document.getElementById("fetch-news").addEventListener("click", async () => {
     const category = document.getElementById("category").value;
     try {
-        const news = await fetchNews(category);
+        let news = await fetchNews(category);
+        
+        // Redefine news if it's undefined or null
+        if (!news || news === undefined || news === null) {
+            news = []; // Default to an empty array
+        }
+        
         console.log("Fetched News:", news); // Log the fetched news
-        if (news && Array.isArray(news) && news.length > 0) {
+        if (Array.isArray(news) && news.length > 0) {
             displayNews(news);
         } else {
             alert("No news found for this category.");
